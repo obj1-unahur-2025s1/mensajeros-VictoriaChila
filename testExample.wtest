@@ -1,4 +1,76 @@
-import example.pepita
+import mensajeros.*
+
+describe "Primera Parte" {
+
+  test "Roberto con 90 kg puede llevar el paquete con el camion con acoplado"{
+    roberto.aumentarPeso(20)
+    roberto.vehiculo(camion)
+    paquete.destino(brooklyn)
+    paquete.pagarPaquete()
+    assert.that(paquete.puedeSerEntregadoPor(roberto))
+  }
+
+  test "Neo con crédito no puede llevar paquete impago"{
+    neo.cargarCredito()
+    paquete.destino(matrix)
+    assert.notThat(paquete.puedeSerEntregadoPor(neo))
+  }
+
+}
+
+describe "segunda parte"{
+  
+  test "Empresa chica"{
+    empresa.contratar(neo)
+    empresa.contratar(roberto)
+    
+    assert.that(empresa.esGrande())
+  }
+
+  test "Empresa grande"{
+    empresa.contratar(neo)
+    empresa.contratar(roberto)
+    empresa.contratar(chuck)
+    assert.that(empresa.esGrande())
+  }
+
+  test "Empresa reducida"{
+    empresa.contratar(neo)
+    empresa.contratar(roberto)
+    empresa.contratar(chuck)
+    empresa.despedir(neo)
+    assert.notThat(empresa.esGrande())
+  }
+
+  test "Empresa vacia"{
+    empresa.contratar(neo)
+    empresa.contratar(roberto)
+    empresa.contratar(chuck)
+    empresa.despedirATodos()
+    assert.notThat(empresa.esGrande())
+  }
+
+  test "Paquete puede entregarse por el primer empleado"{
+    empresa.contratar(neo)
+    empresa.contratar(roberto)
+    empresa.contratar(chuck)
+    neo.cargarCredito()
+    paquete.destino(brooklyn)
+    paquete.pagarPaquete()
+    assert.that(empresa.entregadoPorPrimero(paquete))
+  }
+
+  test "peso del ultimo mensajero"{
+    empresa.contratar(neo)
+    empresa.contratar(roberto)
+    empresa.contratar(chuck)
+    assert.equals(80, empresa.pesoDelUltimo())    
+  }
+}
+
+
+
+
 
 describe "group of tests for pepita" {
 
